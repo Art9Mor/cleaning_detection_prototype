@@ -1,0 +1,59 @@
+[project]
+name = "cleaning-detection-prototype"
+version = "0.1.0"
+description = "Прототип детекции уборки столиков по видео"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "opencv-python>=4.8.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "ultralytics>=8.0.0",
+    "loguru>=0.7.0",
+    "python-dotenv>=1.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.4.0",
+    "mypy>=1.8.0",
+    "types-opencv-python",
+    "pre-commit>=3.0.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# Совместимость с Python 3.8: typing.List / Optional вместо list | X | Y
+ignore = ["UP006", "UP007", "UP045"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cleaning_detection"]
+force-sort-within-sections = true
+split-on-trailing-comma = true
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+follow_imports = "silent"
+
+[[tool.mypy.overrides]]
+module = ["cv2.*", "ultralytics.*", "pandas.*", "loguru.*", "dotenv.*"]
+ignore_missing_imports = true
+
+[tool.ruff.lint.per-file-ignores]
+# stdlib: сначала import, затем from (ruff isort иначе смешивает по алфавиту)
+"main.py" = ["I001"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

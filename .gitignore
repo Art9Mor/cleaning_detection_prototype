@@ -1,0 +1,16 @@
+.venv/
+uv.lock
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pt
+outputs/
+.DS_Store
+logs/
+.env
+
+# Локальные ролики (сотни МБ — не хранить в Git)
+videos/*
+!videos/.gitkeep
